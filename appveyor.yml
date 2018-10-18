@@ -23,6 +23,8 @@ before_build:
   - dotnet restore csharp -s https://api.nuget.org/v3/index.json
   - choco install opencover.portable
   - choco install codecov
+  - ps: Get-ChildItem -r .\resources\geocoding\ -File | Rename-Item -NewName { 'prod_'+$_.Name+'_'+$_.Directory.Name -replace '.txt',''}
+  - ps: Get-ChildItem -r .\resources\geocoding\ -File | Move-Item -Destination .\csharp\PhoneNumbers\res\
 build_script:
   - cmd: dotnet pack -c Release csharp\PhoneNumbers
 test_script:
